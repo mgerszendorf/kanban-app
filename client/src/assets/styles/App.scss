@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url(./components/NavigationBar.scss);
+@import url(./components/Sidebar.scss);
+@import url(./pages/MobileMenu.scss);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 10px;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Poppins", sans-serif;
+}
+
+@media all and (min-width: 1024px) {
+  .App {
+    display: flex;
+  }
+}
