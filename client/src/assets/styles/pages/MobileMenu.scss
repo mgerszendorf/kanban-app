@@ -1,0 +1,174 @@
+@import "../utils/variables";
+
+.mobile-menu {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .nav-bar {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    margin: 0 auto;
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .menu-button {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+
+      .menu-button__cheeckbox {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        cursor: pointer;
+        z-index: 2;
+        -webkit-touch-callout: none;
+        position: absolute;
+        opacity: 0;
+      }
+
+      div {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 22px;
+        height: 12px;
+      }
+
+      span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: $black;
+        border-radius: 1px;
+        transition: all 0.2s cubic-bezier(0.1, 0.82, 0.76, 0.965);
+
+        &:first-of-type {
+          top: 0;
+        }
+
+        &:last-of-type {
+          bottom: 0;
+        }
+      }
+
+      &.active,
+      .menu-button__cheeckbox:checked + div {
+        span {
+          &:first-of-type {
+            transform: rotate(45deg);
+            top: 5px;
+          }
+
+          &:last-of-type {
+            transform: rotate(-45deg);
+            bottom: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .categories {
+    height: 100%;
+    margin: 2rem 0;
+    .favourites,
+    .private {
+      margin-bottom: 2rem;
+      .header {
+        background-color: $blue;
+        border-radius: 12px;
+        margin: 0 2rem;
+        padding: 0.7rem 2rem;
+        p {
+          font-size: 1.6rem;
+          color: $black;
+          font-weight: 500;
+          color: $white;
+        }
+      }
+    }
+    .private {
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        svg {
+          color: #fff;
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  .user-wrapper {
+    background-color: #eef1fb;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+
+    .user {
+      display: flex;
+      align-items: center;
+
+      svg {
+        font-size: 1.6rem;
+        color: #a9aeb6;
+      }
+
+      p {
+        font-size: 1.4rem;
+        font-weight: 500;
+        margin-left: 1rem;
+      }
+    }
+
+    .icon {
+      position: relative;
+      background-color: $blue;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      transition: 0.2s;
+      border: 2px solid $blue;
+
+      &:active {
+        background-color: #fff;
+        border: 2px solid $blue;
+
+        svg {
+          color: $blue;
+        }
+      }
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.6rem;
+        color: #f2f2f2;
+      }
+    }
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .mobile-menu {
+    display: none;
+  }
+}
