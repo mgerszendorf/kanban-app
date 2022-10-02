@@ -114,7 +114,7 @@
   }
 
   .user-wrapper {
-    background-color: #eef1fb;
+    background-color: $light-gray-blue;
     border-radius: 12px 12px 0 0;
     display: flex;
     align-items: center;
@@ -127,7 +127,7 @@
 
       svg {
         font-size: 1.6rem;
-        color: #a9aeb6;
+        color: $dark-gray;
       }
 
       p {
@@ -161,7 +161,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 1.6rem;
-        color: #f2f2f2;
+        color: #fff;
       }
     }
   }
