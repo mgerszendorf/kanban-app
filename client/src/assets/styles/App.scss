@@ -2,6 +2,10 @@
 @import url(./components/NavigationBar.scss);
 @import url(./components/Sidebar.scss);
 @import url(./pages/MobileMenu.scss);
+@import url(./pages/Authentication/ForgotPassword.scss);
+@import url(./pages/Authentication/SignIn.scss);
+@import url(./pages/Authentication/SignUp.scss);
+@import url(./components/Message.scss);
 
 * {
   margin: 0;

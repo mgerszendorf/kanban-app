@@ -52,56 +52,77 @@
       }
     }
 
-    .user-wrapper {
+    .user-options {
       background-color: $light-gray-blue;
       border-radius: 12px 12px 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 2rem;
-
-      .user {
+      .user-wrapper {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        padding: 2rem;
 
-        svg {
-          font-size: 1.6rem;
-          color: $dark-gray;
-        }
-
-        p {
-          font-size: 1.4rem;
-          font-weight: 500;
-          margin-left: 1rem;
-        }
-      }
-
-      .icon {
-        position: relative;
-        background-color: $blue;
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        transition: 0.2s;
-        border: 2px solid $blue;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #fff;
-          border: 2px solid $blue;
+        .user {
+          display: flex;
+          align-items: center;
 
           svg {
-            color: $blue;
+            font-size: 1.6rem;
+            color: $dark-gray;
+          }
+
+          p {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-left: 1rem;
           }
         }
 
-        svg {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+        .signout-icon {
+          position: relative;
+          background-color: $blue;
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+          transition: 0.2s;
+          border: 2px solid $blue;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #fff;
+            border: 2px solid $blue;
+
+            svg {
+              color: $blue;
+            }
+          }
+
+          svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.6rem;
+            color: #fff;
+          }
+        }
+      }
+
+      .sign-in,
+      .sign-up {
+        display: flex;
+        align-items: center;
+        padding: 2rem;
+
+        svg,
+        p {
+          color: $blue;
           font-size: 1.6rem;
-          color: #fff;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        p {
+          padding-left: 1rem;
         }
       }
     }
