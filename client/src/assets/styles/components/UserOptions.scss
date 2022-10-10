@@ -1,0 +1,125 @@
+@import "../utils/variables";
+
+.user-options {
+  background-color: $light-gray-blue;
+  border-radius: 12px 12px 0 0;
+  padding: 2rem;
+
+  .login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .sign-in,
+    .sign-up {
+      display: flex;
+      align-items: center;
+
+      svg,
+      p {
+        color: $blue;
+        font-size: 1.6rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      p {
+        padding-left: 1rem;
+      }
+    }
+
+    .sign-in {
+      padding-right: 2rem;
+    }
+
+    .sign-up {
+      padding-left: 2rem;
+    }
+  }
+
+  .user-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .user {
+      display: flex;
+      align-items: center;
+
+      svg {
+        font-size: 1.6rem;
+        color: $dark-gray;
+      }
+
+      p {
+        font-size: 1.4rem;
+        font-weight: 500;
+        margin: 0 1rem;
+      }
+    }
+
+    .signout-icon {
+      position: relative;
+      background-color: $blue;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      transition: 0.2s;
+      border: 2px solid $blue;
+      cursor: pointer;
+
+      &:active {
+        background-color: #fff;
+        border: 2px solid $blue;
+
+        svg {
+          color: $blue;
+        }
+      }
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.6rem;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .user-options {
+    padding: 0;
+
+    .user-wrapper {
+      padding: 2rem;
+      .user {
+        .signout-icon {
+          &:hover {
+            background-color: #fff;
+            border: 2px solid $blue;
+
+            svg {
+              color: $blue;
+            }
+          }
+        }
+      }
+    }
+
+    .login-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .sign-in {
+        padding: 2rem 2rem 1.5rem 2rem;
+      }
+
+      .sign-up {
+        padding: 1.5rem 2rem 2rem 2rem;
+      }
+    }
+  }
+}

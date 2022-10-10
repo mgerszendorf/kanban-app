@@ -4,6 +4,7 @@ import { FaPlus, FaRegUser } from "react-icons/fa";
 import { Store } from "../redux/types";
 import { toggleMenu } from "../redux/actions/navigationElementsAction";
 import { FiLogOut } from "react-icons/fi";
+import UserOptions from "../components/UserOptions";
 
 function MobileMenu() {
   const menuState = useSelector((state: Store) => state.menuState);
@@ -54,16 +55,7 @@ function MobileMenu() {
           <div className="content"></div>
         </div>
       </div>
-
-      <div className="user-wrapper">
-        <div className="user">
-          <FaRegUser />
-          <p>m_gerszendorf</p>
-        </div>
-        <div className="icon">
-          <FiLogOut />
-        </div>
-      </div>
+      <UserOptions />
     </section>
   );
 }

@@ -1,17 +1,7 @@
-import React from "react";
-import { FaPlus, FaRegUser, FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import { FiLogOut } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { Store } from "../redux/types";
-import {
-  showSignIn,
-  showSignUp,
-} from "../redux/actions/authenticationPopupsAction";
+import { FaPlus } from "react-icons/fa";
+import UserOptions from "./UserOptions";
 
-const Sidebar = ({ signout }: any) => {
-  const authState = useSelector((state: Store) => state.authState);
-  const dispatch = useDispatch();
-
+const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top-area">
@@ -28,30 +18,7 @@ const Sidebar = ({ signout }: any) => {
           </div>
         </div>
       </div>
-      <div className="user-options">
-        {authState?.user?.displayName ? (
-          <div className="user-wrapper">
-            <div className="user">
-              <FaRegUser />
-              <p>{authState?.user?.displayName}</p>
-            </div>
-            <div className="signout-icon">
-              <FiLogOut />
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="sign-in" onClick={() => dispatch(showSignIn())}>
-              <FaSignInAlt />
-              <p>Sign In</p>
-            </div>
-            <div className="sign-up" onClick={() => dispatch(showSignUp())}>
-              <FaUserPlus />
-              <p>Sign Up</p>
-            </div>
-          </>
-        )}
-      </div>
+      <UserOptions />
     </div>
   );
 };
