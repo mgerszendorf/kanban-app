@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GrClose } from "react-icons/gr";
-import { useDispatch } from "react-redux";
+import { ConnectedProps, useDispatch } from "react-redux";
 import { signin, signInWithGoogle } from "../../redux/actions/authAction";
 import {
   hideForgotPassword,
@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions/authenticationPopupsAction";
 import { connect } from "react-redux";
 
-const SignIn = ({ signin, signInWithGoogle }: any) => {
+const SignIn = ({ signin, signInWithGoogle }: SignInProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const SignIn = ({ signin, signInWithGoogle }: any) => {
     dispatch(hideForgotPassword());
   }
 
-  function signInUserOnSubmit(e: any) {
+  function signInUserOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     signin(email, password);
   }
@@ -79,12 +79,13 @@ const SignIn = ({ signin, signInWithGoogle }: any) => {
   );
 };
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    signin: (email: string, password: string) =>
-      dispatch(signin(email, password)),
-    signInWithGoogle: () => dispatch(signInWithGoogle()),
-  };
-}
+const mapDispatch = {
+  signin,
+  signInWithGoogle,
+};
 
-export default connect(null, mapDispatchToProps)(SignIn);
+const connector = connect(null, mapDispatch);
+
+type SignInProps = ConnectedProps<typeof connector>;
+
+export default connector(SignIn);

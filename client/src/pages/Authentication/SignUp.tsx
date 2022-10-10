@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GrClose } from "react-icons/gr";
-import { useDispatch } from "react-redux";
+import { ConnectedProps, useDispatch } from "react-redux";
 import {
   hideForgotPassword,
   hideSignUp,
@@ -9,7 +9,7 @@ import {
 import { signup, signInWithGoogle } from "../../redux/actions/authAction";
 import { connect } from "react-redux";
 
-const SignUp = ({ signup, signInWithGoogle }: any) => {
+const SignUp = ({ signup, signInWithGoogle }: SignUpProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -21,7 +21,7 @@ const SignUp = ({ signup, signInWithGoogle }: any) => {
     dispatch(hideSignUp());
   }
 
-  function signUpUserOnSubmit(e: any) {
+  function signUpUserOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     signup(email, password, name);
   }
@@ -84,12 +84,13 @@ const SignUp = ({ signup, signInWithGoogle }: any) => {
   );
 };
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    signup: (email: string, password: string, name: string) =>
-      dispatch(signup(email, password, name)),
-    signInWithGoogle: () => dispatch(signInWithGoogle()),
-  };
-}
+const mapDispatch = {
+  signup,
+  signInWithGoogle,
+};
 
-export default connect(null, mapDispatchToProps)(SignUp);
+const connector = connect(null, mapDispatch);
+
+type SignUpProps = ConnectedProps<typeof connector>;
+
+export default connector(SignUp);
