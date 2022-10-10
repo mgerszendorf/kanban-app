@@ -24,15 +24,15 @@ function Root() {
       ) : (
         <>
           <NavigationBar />
-          <Sidebar />
-          {signInState && !signUpState && !forgotPasswordState && <SignIn />}
-          {signUpState && !signInState && !forgotPasswordState && <SignUp />}
-          {forgotPasswordState && !signInState && !signUpState && (
-            <ForgotPassword />
-          )}
-          <Message />
         </>
       )}
+      <Sidebar />
+      {signInState && !signUpState && !forgotPasswordState && <SignIn />}
+      {signUpState && !signInState && !forgotPasswordState && <SignUp />}
+      {forgotPasswordState && !signInState && !signUpState && (
+        <ForgotPassword />
+      )}
+      <Message />
     </>
   );
 }
