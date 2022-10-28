@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Message from "../components/Message";
 import NavigationBar from "../components/NavigationBar";
@@ -7,6 +7,7 @@ import { Store } from "../redux/types";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
+import Home from "./Home";
 import MobileMenu from "./MobileMenu";
 
 function Root() {
@@ -27,6 +28,7 @@ function Root() {
         </>
       )}
       <Sidebar />
+      <Home />
       {signInState && !signUpState && !forgotPasswordState && <SignIn />}
       {signUpState && !signInState && !forgotPasswordState && <SignUp />}
       {forgotPasswordState && !signInState && !signUpState && (
