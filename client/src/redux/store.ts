@@ -10,6 +10,8 @@ import {
   errorMessageState,
   successMessageState,
 } from "./reducers/callingMessageReducer";
+import dashboardState from "./features/dashboardSlice";
+import guestDashboardState from "./features/guestDashboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ const store = configureStore({
     authState,
     errorMessageState,
     successMessageState,
+    dashboardState,
+    guestDashboardState,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
