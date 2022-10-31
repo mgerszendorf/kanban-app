@@ -3,14 +3,13 @@ import firebase from "../services/firebase";
 let token = "";
 
 //Get token
-let getToken = async () =>
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      user.getIdToken().then(async (data) => {
-        token = data;
-      });
-    }
-  });
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    user.getIdToken().then(async (data) => {
+      token = data;
+    });
+  }
+});
 
 //Axios
 const axiosClient = axios.create({
@@ -18,7 +17,6 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  getToken();
   return {
     ...config,
     headers: {
