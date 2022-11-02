@@ -1,7 +1,7 @@
 @import "../utils/variables";
 
 .mobile-menu {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -82,7 +82,6 @@
 
   .categories {
     height: 100%;
-    margin: 2rem 0;
     .favourites,
     .private {
       margin-bottom: 2rem;
@@ -98,7 +97,29 @@
           color: $white;
         }
       }
+      .content {
+        .favourite-element,
+        .private-element {
+          display: flex;
+          align-items: center;
+          border-radius: 12px;
+          background-color: $light-blue;
+          margin: 1rem 2rem;
+          padding: 0.7rem 2rem;
+          p {
+            font-size: 1.4rem;
+            color: $black;
+            font-weight: 500;
+            color: $white;
+
+            &:nth-of-type(2) {
+              margin-left: 1rem;
+            }
+          }
+        }
+      }
     }
+
     .private {
       .header {
         display: flex;
