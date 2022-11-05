@@ -1,10 +1,11 @@
-const Schema = moongoose.Schema;
+import { Schema, model } from "mongoose";
+import { schemaOptions } from "./schemaOptions";
 
-const dashboardSchema = new Schema(
+const DashboardSchema = new Schema(
   {
     user: {
-      type: Schema.Types.ObjectId,
-      ref: "userSchema",
+      type: Object,
+      ref: "User",
       required: true,
     },
     icon: {
@@ -35,4 +36,5 @@ const dashboardSchema = new Schema(
   schemaOptions
 );
 
-module.exports = moongoose.module(dashboardSchema);
+const Dashboard = model("Dashboard", DashboardSchema);
+export default Dashboard;
