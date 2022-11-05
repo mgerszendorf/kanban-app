@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IDashboards } from "../types";
 
-const initialState = { value: [] };
+const initialState = { value: [] } as IDashboards;
 
 export const dashboardSlice = createSlice({
-  name: "user",
+  name: "dashboard",
   initialState,
   reducers: {
     setDashboards: (state, action) => {

@@ -1,16 +1,51 @@
 export interface Store {
-  menuState: boolean;
-  signInState: boolean;
-  signUpState: boolean;
-  forgotPasswordState: boolean;
+  dashboardState: IDashboards;
+  messageState: IMessage;
+  navigationElementState: INavigationElement;
   authState: IAuthState;
-  errorMessageState: boolean;
-  successMessageState: boolean;
 }
 
+//Dashboards
+export interface IDashboards {
+  value: IDashboard[];
+}
+
+export interface IDashboard {
+  description: String;
+  favourite: Boolean;
+  favouritePosition: Number;
+  icon: String;
+  id: String;
+  position: number;
+  title: String;
+  user: IDashboardUser;
+}
+
+export interface IDashboardUser {
+  displayName: String;
+  email: String;
+  uid: String;
+}
+
+// Message
+export interface IMessage {
+  value: {
+    message: String;
+    type: String;
+  };
+}
+
+//Navigation element
+export interface INavigationElement {
+  active: Boolean;
+}
+
+//User
 export interface IAuthState {
-  authMsg: string;
-  user: IUser;
+  value: {
+    message: String;
+    user: IUser;
+  };
 }
 
 export interface IUser {

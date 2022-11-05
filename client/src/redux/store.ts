@@ -1,29 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { menuState } from "./reducers/navigationElementsReducer";
-import {
-  signInState,
-  signUpState,
-  forgotPasswordState,
-} from "./reducers/authenticationPopupsReducer";
-import authState from "./reducers/authReducer";
-import {
-  errorMessageState,
-  successMessageState,
-} from "./reducers/callingMessageReducer";
 import dashboardState from "./features/dashboardSlice";
-import guestDashboardState from "./features/guestDashboardSlice";
+import messageState from "./features/messageSlice";
+import navigationElementState from "./features/navigationElementSlice";
+import authState from "./features/authSlice";
 
 const store = configureStore({
   reducer: {
-    menuState,
-    signInState,
-    signUpState,
-    forgotPasswordState,
-    authState,
-    errorMessageState,
-    successMessageState,
     dashboardState,
-    guestDashboardState,
+    messageState,
+    navigationElementState,
+    authState,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
