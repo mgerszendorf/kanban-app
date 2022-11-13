@@ -1,7 +1,4 @@
-const moongoose = require("mongoose");
-const { schemaOptions } = require("./schemaOptions");
-
-exports.schemaOptions = {
+export const schemaOptions = {
   toJSON: {
     virtuals: true,
   },

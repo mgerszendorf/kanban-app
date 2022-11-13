@@ -1,18 +1,24 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
+import { schemaOptions } from "./schemaOptions";
 
-const sectionSchema = new Schema(
+const SectionSchema = new Schema(
   {
     dashboard: {
       type: Schema.Types.ObjectId,
-      ref: "dashboardSchema",
+      ref: "Dashboard",
       required: true,
     },
     title: {
       type: String,
       default: "",
     },
+    tasks: {
+      type: Array,
+      default: [],
+    },
   },
   schemaOptions
 );
 
-module.exports = mongoose.model(sectionSchema);
+const Section = model("Section", SectionSchema);
+export default Section;

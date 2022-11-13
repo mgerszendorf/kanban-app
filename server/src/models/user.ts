@@ -1,4 +1,7 @@
-const userSchema = new moongoose.Schema(
+import { Schema, model } from "mongoose";
+import { schemaOptions } from "./schemaOptions";
+
+const UserSchema = new Schema(
   {
     displayName: {
       type: String,
@@ -18,4 +21,5 @@ const userSchema = new moongoose.Schema(
   schemaOptions
 );
 
-module.exports = mongoose.model(userSchema);
+const User = model("User", UserSchema);
+export default User;

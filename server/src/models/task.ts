@@ -1,8 +1,11 @@
-const taskSchema = new Schema(
+import { Schema, model } from "mongoose";
+import { schemaOptions } from "./schemaOptions";
+
+const TaskSchema = new Schema(
   {
-    task: {
+    section: {
       type: Schema.Types.ObjectId,
-      ref: "sectionSchema",
+      ref: "Section",
       required: true,
     },
     title: {
@@ -20,4 +23,5 @@ const taskSchema = new Schema(
   schemaOptions
 );
 
-module.exports = mongoose.model(taskSchema);
+const Task = model("Task", TaskSchema);
+export default Task;
