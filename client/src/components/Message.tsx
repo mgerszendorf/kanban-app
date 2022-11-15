@@ -5,26 +5,20 @@ import { useSelector } from "react-redux";
 import { Store } from "../redux/types";
 
 function Message() {
-  const authState = useSelector((state: Store) => state.authState);
-  const errorMessageState = useSelector(
-    (state: Store) => state.errorMessageState
-  );
-  const successMessageState = useSelector(
-    (state: Store) => state.successMessageState
-  );
+  const messageState = useSelector((state: Store) => state.messageState.value);
 
   return (
     <>
-      {errorMessageState && (
+      {messageState?.type === "Error" && (
         <div className="message" style={{ backgroundColor: "#FDEDEE" }}>
           <MdError style={{ color: "#F04D62" }} />
-          <p>{authState?.authMsg}</p>
+          <p>{messageState?.message}</p>
         </div>
       )}
-      {successMessageState && (
+      {messageState?.type === "Success" && (
         <div className="message" style={{ backgroundColor: "#EBFBF6" }}>
           <MdError style={{ color: "#34D39D" }} />
-          <p>{authState?.authMsg}</p>
+          <p>{messageState?.message}</p>
         </div>
       )}
     </>
