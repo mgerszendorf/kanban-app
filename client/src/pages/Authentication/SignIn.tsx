@@ -1,42 +1,135 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import firebase from "../../services/firebase";
+import { GoogleAuthProvider } from "firebase/auth";
+import Loader from "../../components/Loader";
 import { GrClose } from "react-icons/gr";
-import { ConnectedProps, useDispatch } from "react-redux";
-import { signin, signInWithGoogle } from "../../redux/actions/authAction";
-import {
-  hideForgotPassword,
-  hideSignIn,
-  hideSignUp,
-  showForgotPassword,
-  showSignUp,
-} from "../../redux/actions/authenticationPopupsAction";
-import { connect } from "react-redux";
+import { setMessage } from "../../redux/features/messageSlice";
+import { setAuth } from "../../redux/features/authSlice";
+import Message from "../../components/Message";
 
-const SignIn = ({ signin, signInWithGoogle }: SignInProps) => {
+const SignIn = () => {
+  const [loader, setLoader] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [messageState, setMessageState] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function handleForgotPassword() {
-    dispatch(showForgotPassword());
-    dispatch(hideSignIn());
-    dispatch(hideSignUp());
-  }
-
-  function handleSignUp() {
-    dispatch(showSignUp());
-    dispatch(hideSignIn());
-    dispatch(hideForgotPassword());
-  }
-
-  function signInUserOnSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const signInUserOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signin(email, password);
-  }
+    try {
+      setLoader(true);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((res: any) => {
+          const { displayName, email, uid, refreshToken } = res.user;
+          dispatch(
+            setAuth({
+              message: "Logged in successfully",
+              user: {
+                displayName,
+                email,
+                uid,
+                refreshToken,
+              },
+            })
+          );
+          dispatch(
+            setMessage({
+              message: "Logged in successfully",
+              type: "Success",
+            })
+          );
+          setMessageState(true);
+          setTimeout(() => {
+            setMessageState(false);
+          }, 1500);
+        })
+        .catch(() => {
+          dispatch(
+            setMessage({
+              message: "Invalid login credentials",
+              type: "Error",
+            })
+          );
+          setMessageState(true);
+          setTimeout(() => {
+            setMessageState(false);
+          }, 1500);
+        })
+        .finally(() => {
+          setLoader(false);
+        });
+    } catch (err) {
+      dispatch(
+        setMessage({
+          message: "Invalid login credentials",
+          type: "Error",
+        })
+      );
+      setMessageState(true);
+      setTimeout(() => {
+        setMessageState(false);
+      }, 1500);
+    }
+  };
+
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      setLoader(true);
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((res) => {
+          dispatch(
+            setAuth({
+              message: "Logged in successfully",
+              user: res?.user,
+            })
+          );
+          dispatch(
+            setMessage({
+              message: "Logged in successfully",
+              type: "Success",
+            })
+          );
+          setMessageState(true);
+          setTimeout(() => {
+            setMessageState(false);
+          }, 1500);
+        })
+        .finally(() => {
+          setLoader(false);
+        });
+    } catch (err) {
+      dispatch(
+        setMessage({
+          message: "Invalid login credentials",
+          type: "Error",
+        })
+      );
+      setMessageState(true);
+      setTimeout(() => {
+        setMessageState(false);
+      }, 1500);
+    }
+  };
+
+  const changeUrl = (link: string) => {
+    navigate(`${link}`, { replace: true });
+  };
+
+  if (loader) return <Loader left={"50%"} />;
+  if (messageState) return <Message />;
 
   return (
     <section className="sign-in-wrapper">
       <div className="sign-in">
-        <div className="close-btn" onClick={() => dispatch(hideSignIn())}>
+        <div className="close-btn" onClick={() => changeUrl("/welcome")}>
           <GrClose />
         </div>
         <h2>Welcome back</h2>
@@ -48,9 +141,15 @@ const SignIn = ({ signin, signInWithGoogle }: SignInProps) => {
               type="email"
               name="email"
               placeholder="Enter your email"
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) => (e.target.placeholder = "Enter your email")}
-              onChange={(e) => setEmail(e.target.value)}
+              onFocus={(e: React.ChangeEvent<HTMLInputElement>) =>
+                (e.target.placeholder = "")
+              }
+              onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                (e.target.placeholder = "Enter your email")
+              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
             />
           </label>
           <label htmlFor="password">
@@ -59,14 +158,20 @@ const SignIn = ({ signin, signInWithGoogle }: SignInProps) => {
               type="password"
               name="password"
               placeholder="Enter your password"
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) => (e.target.placeholder = "Enter your password")}
-              onChange={(e) => setPassword(e.target.value)}
+              onFocus={(e: React.ChangeEvent<HTMLInputElement>) =>
+                (e.target.placeholder = "")
+              }
+              onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                (e.target.placeholder = "Enter your password")
+              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
             />
           </label>
           <div className="row">
-            <p onClick={() => handleForgotPassword()}>Forgot password</p>
-            <p onClick={() => handleSignUp()}>Sign up</p>
+            <p onClick={() => changeUrl("/forgot-password")}>Forgot password</p>
+            <p onClick={() => changeUrl("/signup")}>Sign up</p>
           </div>
 
           <button>Sign in</button>
@@ -79,13 +184,4 @@ const SignIn = ({ signin, signInWithGoogle }: SignInProps) => {
   );
 };
 
-const mapDispatch = {
-  signin,
-  signInWithGoogle,
-};
-
-const connector = connect(null, mapDispatch);
-
-type SignInProps = ConnectedProps<typeof connector>;
-
-export default connector(SignIn);
+export default SignIn;
