@@ -3,6 +3,7 @@ export interface Store {
   messageState: IMessage;
   navigationElementState: INavigationElement;
   authState: IAuthState;
+  favouriteListState: IDashboards;
 }
 
 //Dashboards
@@ -54,3 +55,6 @@ export interface IUser {
   uid: string;
   refreshToken: string;
 }
+
+//Favourite
+export interface IFavouriteList {}
