@@ -1,73 +1,38 @@
-import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import UserOptions from "./UserOptions";
 import dashboardApi from "../api/dashboardApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setDashboards } from "../redux/features/dashboardSlice";
-import { IDashboard, Store } from "../redux/types";
-import { useNavigate, useParams } from "react-router-dom";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { Store } from "../redux/types";
+import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
+import FavouriteList from "./DashboardLists/FavouriteList";
+import PrivateList from "./DashboardLists/PrivateList";
+import { useState } from "react";
 
 const Sidebar = () => {
-  const authState = useSelector((state: Store) => state.authState.value);
   const dashboardState = useSelector(
     (state: Store) => state.dashboardState.value
   );
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { dashboardId } = useParams();
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  //Fetching data
-  useEffect(() => {
-    const getDashboards = async () => {
-      try {
-        const res = await dashboardApi.getAll();
-        dispatch(setDashboards(res));
-      } catch (err) {
-        alert(err);
-      }
-    };
-    getDashboards();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const activeItem = dashboardState?.findIndex(
-      (e: any) => e.id === dashboardId
-    );
-    if (dashboardState?.length > 0 && dashboardId === undefined) {
-      navigate(`/dashboards/${dashboardState[0].id}`);
-    }
-    setActiveIndex(activeItem);
-  }, [dashboardState, dashboardId, navigate]);
-
-  const onDragEndHandler = async ({ source, destination }: any) => {
-    const newList = [...dashboardState];
-    const [removed] = newList.splice(source.index, 1);
-    newList.splice(destination.index, 0, removed);
-
-    const activeItem = newList.findIndex((e) => e.id === dashboardId);
-    setActiveIndex(activeItem);
-    dispatch(setDashboards(newList));
-
-    try {
-      await dashboardApi.updatePosition({ dashboards: newList });
-    } catch (err) {
-      alert(err);
-    }
-  };
 
   const addDashboard = async () => {
     try {
+      setLoader(true);
       const res = await dashboardApi.create();
       const newList = [res, ...dashboardState];
       dispatch(setDashboards(newList));
       navigate(`/dashboards/${res.id}`);
     } catch (err) {
-      alert(err);
+      console.log(err);
+    } finally {
+      setLoader(false);
     }
   };
+
+  if (loader) return <Loader />;
 
   return (
     <div className="sidebar">
@@ -80,10 +45,7 @@ const Sidebar = () => {
             <p>Favourites</p>
           </div>
           <div className="content">
-            <div className="favourite-element">
-              <p>📃</p>
-              <p>Untitled</p>
-            </div>
+            <FavouriteList />
           </div>
         </div>
         <div className="private">
@@ -92,37 +54,7 @@ const Sidebar = () => {
             <FaPlus onClick={addDashboard} />
           </div>
           <div className="content">
-            <DragDropContext onDragEnd={onDragEndHandler}>
-              <Droppable
-                key={"list-dashboard-droppable-key"}
-                droppableId={"list-dashboard-droppable"}
-              >
-                {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
-                    {dashboardState?.map((item: any, index: any) => (
-                      <Draggable
-                        key={item.id}
-                        draggableId={item.id}
-                        index={index}
-                      >
-                        {(provided: any, snapshot: any) => (
-                          <div
-                            className="private-element"
-                            ref={provided.innerRef}
-                            {...provided.dragHandleProps}
-                            {...provided.draggableProps}
-                            selected={index === activeIndex}
-                          >
-                            <p>{item?.icon}</p>
-                            <p>{item?.title}</p>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+            <PrivateList />
           </div>
         </div>
       </div>

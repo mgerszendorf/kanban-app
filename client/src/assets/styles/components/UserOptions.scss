@@ -95,15 +95,13 @@
 
     .user-wrapper {
       padding: 2rem;
-      .user {
-        .signout-icon {
-          &:hover {
-            background-color: #fff;
-            border: 2px solid $blue;
+      .signout-icon {
+        &:hover {
+          background-color: #fff;
+          border: 2px solid $blue;
 
-            svg {
-              color: $blue;
-            }
+          svg {
+            color: $blue;
           }
         }
       }

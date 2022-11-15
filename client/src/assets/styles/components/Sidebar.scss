@@ -11,8 +11,8 @@
     justify-content: space-between;
     height: 100vh;
     max-height: 100vh;
-    width: 20vw;
-    max-width: 250px;
+    min-width: 250px;
+    width: 250px;
     border-radius: 0 12px 12px 0;
     box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.08);
     .top-area {
@@ -64,6 +64,8 @@
             background-color: $light-blue;
             margin: 1rem 2rem;
             padding: 0.7rem 2rem;
+            cursor: pointer;
+            transition: 0.2s;
             p {
               font-size: 1.4rem;
               color: $black;
@@ -73,6 +75,19 @@
               &:nth-of-type(2) {
                 margin-left: 1rem;
               }
+            }
+
+            &:hover {
+              background-color: $light-blue-hover;
+            }
+
+            &:active {
+              cursor: grab;
+              background-color: $light-blue-hover;
+            }
+
+            &.active {
+              background-color: $light-blue-hover;
             }
           }
         }
@@ -87,6 +102,7 @@
           svg {
             color: $white;
             font-size: 1.6rem;
+            cursor: pointer;
           }
         }
       }

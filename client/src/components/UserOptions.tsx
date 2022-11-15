@@ -1,16 +1,61 @@
 import { FaRegUser, FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { ConnectedProps, useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setAuth } from "../redux/features/authSlice";
+import { setMessage } from "../redux/features/messageSlice";
 import { Store } from "../redux/types";
-import { signout } from "../redux/actions/authAction";
-import {
-  showSignIn,
-  showSignUp,
-} from "../redux/actions/authenticationPopupsAction";
+import firebase from "../services/firebase";
 
-const UserOptions = ({ signout }: UserOptionsProps) => {
-  const authState = useSelector((state: Store) => state.authState);
+function UserOptions() {
+  const authState = useSelector((state: Store) => state.authState.value);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const changeUrl = (link: string) => {
+    navigate(`${link}`, { replace: true });
+    window.location.reload();
+  };
+
+  const signout = () => {
+    try {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          dispatch(
+            setAuth({
+              message: "Logged out successfully",
+              user: {},
+            })
+          );
+          dispatch(
+            setMessage({
+              message: "Logged out successfully",
+              type: "Success",
+            })
+          );
+          navigate("/signin", { replace: true });
+          window.location.reload();
+        })
+        .catch((err) => {
+          dispatch(
+            setMessage({
+              message: "Signout failed. Please try again",
+              type: "Error",
+            })
+          );
+        });
+    } catch (err) {
+      dispatch(
+        setMessage({
+          message: "Signout failed. Please try again",
+          type: "Error",
+        })
+      );
+    }
+  };
 
   return (
     <div className="user-options">
@@ -20,17 +65,17 @@ const UserOptions = ({ signout }: UserOptionsProps) => {
             <FaRegUser />
             <p>{authState?.user?.displayName}</p>
           </div>
-          <div className="signout-icon" onClick={() => signout()}>
+          <div className="signout-icon" onClick={signout}>
             <FiLogOut />
           </div>
         </div>
       ) : (
         <div className="login-wrapper">
-          <div className="sign-in" onClick={() => dispatch(showSignIn())}>
+          <div className="sign-in" onClick={() => changeUrl("/signin")}>
             <FaSignInAlt />
             <p>Sign In</p>
           </div>
-          <div className="sign-up" onClick={() => dispatch(showSignUp())}>
+          <div className="sign-up" onClick={() => changeUrl("/signup")}>
             <FaUserPlus />
             <p>Sign Up</p>
           </div>
@@ -38,14 +83,6 @@ const UserOptions = ({ signout }: UserOptionsProps) => {
       )}
     </div>
   );
-};
+}
 
-const mapDispatch = {
-  signout,
-};
-
-const connector = connect(null, mapDispatch);
-
-type UserOptionsProps = ConnectedProps<typeof connector>;
-
-export default connector(UserOptions);
+export default UserOptions;
