@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { Store } from "../redux/types";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
@@ -7,8 +9,14 @@ import HeroBanner from "./HeroBanner";
 import Home from "./Home";
 import AppLayout from "./layouts/AppLayout";
 import ProtectedLayout from "./layouts/ProtectedLayout";
+import MobileMenu from "./MobileMenu";
 
 function Root() {
+  const menuState = useSelector(
+    (state: Store) => state.navigationElementState.active
+  );
+  if (menuState) return <MobileMenu />;
+
   return (
     <Routes>
       <Route path="/" element={<ProtectedLayout />}>

@@ -1,6 +1,5 @@
-import React from "react";
 import { useDispatch } from "react-redux";
-import { toggleMenu } from "../redux/actions/navigationElementsAction";
+import { setNavigationElement } from "../redux/features/navigationElementSlice";
 
 function NavigationBar() {
   const dispatch = useDispatch();
@@ -8,7 +7,10 @@ function NavigationBar() {
   return (
     <div className="navigation-bar">
       <div className="logo">Kanban App</div>
-      <div className="menu-button" onClick={() => dispatch(toggleMenu(true))}>
+      <div
+        className="menu-button"
+        onClick={() => dispatch(setNavigationElement(true))}
+      >
         <input className="menu-button__cheeckbox" type="checkbox" />
         <div>
           <span></span>
