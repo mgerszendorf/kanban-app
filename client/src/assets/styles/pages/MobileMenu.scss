@@ -82,6 +82,7 @@
 
   .categories {
     height: 100%;
+    margin-bottom: auto;
     .favourites,
     .private {
       margin-bottom: 2rem;
@@ -127,7 +128,7 @@
         align-items: center;
 
         svg {
-          color: #fff;
+          color: $white;
           font-size: 1.6rem;
         }
       }

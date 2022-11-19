@@ -1,9 +1,10 @@
+@import "../utils/variables";
+
 .message {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #789;
   display: flex;
   align-items: center;
   padding: 2rem;

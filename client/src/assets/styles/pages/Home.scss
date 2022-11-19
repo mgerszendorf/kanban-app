@@ -26,11 +26,11 @@
       color: $blue;
       font-weight: 600;
       margin: 2rem 0;
-      background-color: #fff;
+      background-color: $white;
       transition: 0.2s;
 
       &:active {
-        color: #fff;
+        color: $white;
         background-color: $blue;
       }
     }
@@ -42,7 +42,7 @@
     .first-dashboard-wrapper {
       .first-dashboard {
         &:hover {
-          color: #fff;
+          color: $white;
           background-color: $blue;
         }
       }
