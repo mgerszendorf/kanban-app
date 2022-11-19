@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Section from "../models/section";
 import Task from "../models/task";
 
+//POST /dashboards/:dashboardId/sections
 export const create = async (req: Request, res: Response) => {
   const { dashboardId } = req.params;
   try {
@@ -12,6 +13,7 @@ export const create = async (req: Request, res: Response) => {
   }
 };
 
+//PUT /dashboards/:dashboardId/sections/:sectionId
 export const updateSection = async (req: Request, res: Response) => {
   const { sectionId } = req.params;
   try {
@@ -24,6 +26,7 @@ export const updateSection = async (req: Request, res: Response) => {
   }
 };
 
+//DELETE /dashboards/:dashboardId/sections/:sectionId
 export const deleteSection = async (req: Request, res: Response) => {
   const { sectionId } = req.params;
   try {

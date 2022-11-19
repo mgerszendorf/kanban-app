@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
-const { validationResult } = require("express-validator");
+import { validationResult } from "express-validator";
 
 export const validate = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);

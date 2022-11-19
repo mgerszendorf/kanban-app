@@ -1,6 +1,5 @@
 import React from "react";
 import { MdError } from "react-icons/md";
-import { BsCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Store } from "../redux/types";
 
