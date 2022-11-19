@@ -61,17 +61,21 @@ export const getOne = async (req: Request, res: Response) => {
   try {
     const dashboard = await Dashboard.findOne({
       _id: dashboardId,
-      email: "marek.gerszendorf@wp.pl",
+      user: {
+        displayName: req.user.name,
+        email: req.user.email,
+        uid: req.user.uid,
+      },
     });
     if (!dashboard) return res.status(404).json("Dashboard was not found");
     const sections = await Section.find({ dashboard: dashboardId });
     for (const section of sections) {
       const tasks = await Task.find({ section: section.id })
         .populate("section")
-        .sort("position");
+        .sort("-position");
       section.tasks = tasks;
     }
-    res.status(200).json({ value: { dashboard, sections } });
+    res.status(200).json({ dashboard, sections });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -121,7 +125,11 @@ export const updateDashboard = async (req: Request, res: Response) => {
 export const getFavourites = async (req: Request, res: Response) => {
   try {
     const favourites = await Dashboard.find({
-      uid: req.user.email,
+      user: {
+        displayName: req.user.name,
+        email: req.user.email,
+        uid: req.user.uid,
+      },
       favourite: true,
     }).sort("favouritePosition");
     res.status(200).json(favourites);
