@@ -1,7 +1,11 @@
-const admin = require("../config/firebase-config");
+import { admin } from "../config/firebase-config";
 import { Request, Response, NextFunction } from "express";
 
-export const verifyToken = async (req: any, res: any, next: any) => {
+export const verifyToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const token = req.headers.authorization.split(" ")[1];
   try {
     const decodeValue = await admin.auth().verifyIdToken(token);
@@ -9,8 +13,8 @@ export const verifyToken = async (req: any, res: any, next: any) => {
       req.user = decodeValue;
       return next();
     }
-    return res.json({ message: "Un authorize", data: [] });
+    return res.json({ message: "No authorization", data: [] });
   } catch (e) {
-    return res.json({ message: "Internal Error", data: [] });
+    return res.json({ message: "Internal error", data: [] });
   }
 };
