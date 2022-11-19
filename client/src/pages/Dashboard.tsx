@@ -17,6 +17,7 @@ function Dashboard() {
   const { dashboardId } = useParams<string>();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [descriptionLines, setDescriptionLines] = useState(1);
   const [sections, setSections] = useState<ISection[]>([]);
   const [isFavourite, setIsFavourite] = useState(false);
   const [icon, setIcon] = useState("");
@@ -39,8 +40,8 @@ function Dashboard() {
   //Fetching data
   useEffect(() => {
     const getDashboard = async () => {
-      setLoader(true);
       try {
+        setLoader(true);
         const res = await dashboardApi.getOne(dashboardId);
         const { title, description, favourite, icon } = res?.dashboard;
         setTitle(title as string);
@@ -56,6 +57,13 @@ function Dashboard() {
     };
     getDashboard();
   }, [dashboardId]);
+
+  //Checking how many lines a description has
+  useEffect(() => {
+    let lines = description.split(/\r|\r\n|\n/);
+    let count = lines.length;
+    setDescriptionLines(count);
+  }, [description]);
 
   const onIconChange = async (newIcon: string) => {
     let temp = [...dashboardState];
@@ -192,7 +200,6 @@ function Dashboard() {
               onChange={updateTitle}
               ref={titleRef}
               rows={1}
-              style={{ width: `${title.length}ch` }}
             />
           </div>
           <textarea
@@ -200,7 +207,7 @@ function Dashboard() {
             value={description}
             onChange={updateDescription}
             ref={descriptionRef}
-            rows={1}
+            rows={descriptionLines}
           />
         </div>
       </div>
