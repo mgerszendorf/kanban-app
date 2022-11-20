@@ -5,34 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDashboards } from "../redux/features/dashboardSlice";
 import { Store } from "../redux/types";
 import { useNavigate } from "react-router-dom";
-import Loader from "./Loader";
 import FavouriteList from "./DashboardLists/FavouriteList";
 import PrivateList from "./DashboardLists/PrivateList";
-import { useState } from "react";
 
 const Sidebar = () => {
   const dashboardState = useSelector(
     (state: Store) => state.dashboardState.value
   );
-  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const addDashboard = async () => {
     try {
-      setLoader(true);
       const res = await dashboardApi.create();
       const newList = [res, ...dashboardState];
       dispatch(setDashboards(newList));
       navigate(`/dashboards/${res.id}`);
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoader(false);
     }
   };
-
-  if (loader) return <Loader />;
 
   return (
     <div className="sidebar">

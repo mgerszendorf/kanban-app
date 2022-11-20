@@ -6,16 +6,16 @@ import Task from "../models/task";
 //CREATE /dashboards
 export const createDashboard = async (req: Request, res: Response) => {
   try {
-    const { name, email, uid } = req?.user;
+    const { email, uid } = req?.user;
     const dashboardsCount = await Dashboard.find().count();
     const dashboard = await Dashboard.create({
       user: {
-        displayName: name,
         email: email,
         uid: uid,
       },
       position: dashboardsCount > 0 ? dashboardsCount : 0,
     });
+    console.log(dashboard);
     res.status(201).json(dashboard);
   } catch (error) {
     res.status(500).json(error);
@@ -24,11 +24,10 @@ export const createDashboard = async (req: Request, res: Response) => {
 
 //GET /dashboards
 export const getAllDashboard = async (req: Request, res: Response) => {
-  const { name, email, uid } = req.user;
+  const { email, uid } = req.user;
   try {
     const dashboards = await Dashboard.find({
       user: {
-        displayName: name,
         email: email,
         uid: uid,
       },
@@ -58,13 +57,13 @@ export const updatePosition = async (req: Request, res: Response) => {
 //GET /dashboards/:dashboardId
 export const getOne = async (req: Request, res: Response) => {
   const { dashboardId } = req.params;
+  const { email, uid } = req.user;
   try {
     const dashboard = await Dashboard.findOne({
       _id: dashboardId,
       user: {
-        displayName: req.user.name,
-        email: req.user.email,
-        uid: req.user.uid,
+        email: email,
+        uid: uid,
       },
     });
     if (!dashboard) return res.status(404).json("Dashboard was not found");
@@ -123,12 +122,12 @@ export const updateDashboard = async (req: Request, res: Response) => {
 
 //GET /dashboards/favourites
 export const getFavourites = async (req: Request, res: Response) => {
+  const { email, uid } = req?.user;
   try {
     const favourites = await Dashboard.find({
       user: {
-        displayName: req.user.name,
-        email: req.user.email,
-        uid: req.user.uid,
+        email: email,
+        uid: uid,
       },
       favourite: true,
     }).sort("favouritePosition");
