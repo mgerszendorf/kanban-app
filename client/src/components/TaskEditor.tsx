@@ -72,7 +72,12 @@ const TaskEditor = (props: ITaskEditorProps) => {
             type="text"
             value={title}
             placeholder="Untitled"
-            defaultValue="Untitled"
+            onFocus={(e: React.ChangeEvent<HTMLInputElement>) =>
+              (e.target.placeholder = "")
+            }
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+              (e.target.placeholder = "Untitled")
+            }
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTitle(e.target.value)
             }
@@ -84,6 +89,13 @@ const TaskEditor = (props: ITaskEditorProps) => {
         <textarea
           className="task-content"
           value={taskContent}
+          placeholder="Description"
+          onFocus={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            (e.target.placeholder = "")
+          }
+          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            (e.target.placeholder = "Description")
+          }
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setTaskContent(e.target.value)
           }

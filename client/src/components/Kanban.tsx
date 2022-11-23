@@ -7,6 +7,7 @@ import TaskEditor from "./TaskEditor";
 import Loader from "./Loader";
 import { ISection } from "../types/ISections";
 import { ITask } from "../types/ITasks";
+import dashboardApi from "../api/dashboardApi";
 
 interface IKanbanProps {
   sections: ISection[];
@@ -51,15 +52,19 @@ const Kanban = (props: IKanbanProps) => {
     }
 
     try {
+      setLoader(true);
       await taskApi.updateTaskPosition(dashboardId, {
         resourceList: sourceTasks,
         destinationList: destinationTasks,
         resourceSectionId: sourceSectionId,
         destinationSectionId: destinationSectionId,
       });
-      setData(data);
+      const res = await dashboardApi.getOne(dashboardId);
+      setData(res?.sections);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -174,6 +179,12 @@ const Kanban = (props: IKanbanProps) => {
                         type="text"
                         value={section.title}
                         placeholder="Untitled"
+                        onFocus={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          (e.target.placeholder = "")
+                        }
+                        onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          (e.target.placeholder = "Untitled")
+                        }
                         onChange={(e) => updateSectionTitle(e, section.id)}
                       />
                       <div className="icons">
