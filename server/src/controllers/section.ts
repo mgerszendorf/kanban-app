@@ -7,6 +7,7 @@ export const create = async (req: Request, res: Response) => {
   const { dashboardId } = req.params;
   try {
     const section = await Section.create({ dashboard: dashboardId });
+    section._doc.tasks = [];
     res.status(201).json(section);
   } catch (err) {
     res.status(500).json(err);
@@ -20,6 +21,7 @@ export const updateSection = async (req: Request, res: Response) => {
     const section = await Section.findByIdAndUpdate(sectionId, {
       $set: req.body,
     });
+    section._doc.tasks = [];
     res.status(200).json(section);
   } catch (err) {
     res.status(500).json(err);

@@ -1,6 +1,17 @@
 import { Schema, model } from "mongoose";
 import { schemaOptions } from "./schemaOptions";
 
+interface DocumentResult<T> {
+  _doc: T;
+}
+
+interface ITask extends DocumentResult<ITask> {
+  section: any;
+  title: string;
+  content: string;
+  position: number;
+}
+
 const TaskSchema = new Schema(
   {
     section: {
@@ -23,5 +34,4 @@ const TaskSchema = new Schema(
   schemaOptions
 );
 
-const Task = model("Task", TaskSchema);
-export default Task;
+export default model<ITask>("Task", TaskSchema);

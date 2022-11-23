@@ -1,6 +1,21 @@
 import { Schema, model } from "mongoose";
 import { schemaOptions } from "./schemaOptions";
 
+interface DocumentResult<T> {
+  _doc: T;
+}
+
+interface IDashboard extends DocumentResult<IDashboard> {
+  user: any;
+  icon: string;
+  title: string;
+  description: string;
+  position: number;
+  favourite: boolean;
+  favouritePosition: number;
+  sections: any;
+}
+
 const DashboardSchema = new Schema(
   {
     user: {
@@ -32,9 +47,12 @@ const DashboardSchema = new Schema(
       type: Number,
       default: 0,
     },
+    sections: {
+      type: Array,
+      default: [],
+    },
   },
   schemaOptions
 );
 
-const Dashboard = model("Dashboard", DashboardSchema);
-export default Dashboard;
+export default model<IDashboard>("Dashboard", DashboardSchema);

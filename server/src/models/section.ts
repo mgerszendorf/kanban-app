@@ -1,6 +1,16 @@
 import { Schema, model } from "mongoose";
 import { schemaOptions } from "./schemaOptions";
 
+interface DocumentResult<T> {
+  _doc: T;
+}
+
+interface ISection extends DocumentResult<ISection> {
+  dashboard: any;
+  title: string;
+  tasks: any;
+}
+
 const SectionSchema = new Schema(
   {
     dashboard: {
@@ -20,5 +30,4 @@ const SectionSchema = new Schema(
   schemaOptions
 );
 
-const Section = model("Section", SectionSchema);
-export default Section;
+export default model<ISection>("Section", SectionSchema);

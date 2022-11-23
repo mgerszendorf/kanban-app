@@ -12,6 +12,7 @@ export const createTask = async (req: Request, res: Response) => {
       section: sectionId,
       position: tasksCount > 0 ? tasksCount : 0,
     });
+    task._doc.section = section;
     res.status(201).json({ task });
   } catch (err) {
     res.status(500).json(err);

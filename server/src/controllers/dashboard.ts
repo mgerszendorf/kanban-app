@@ -15,7 +15,6 @@ export const createDashboard = async (req: Request, res: Response) => {
       },
       position: dashboardsCount > 0 ? dashboardsCount : 0,
     });
-    console.log(dashboard);
     res.status(201).json(dashboard);
   } catch (error) {
     res.status(500).json(error);
@@ -72,8 +71,9 @@ export const getOne = async (req: Request, res: Response) => {
       const tasks = await Task.find({ section: section.id })
         .populate("section")
         .sort("-position");
-      section.tasks = tasks;
+      section._doc.tasks = tasks;
     }
+    dashboard._doc.sections = sections;
     res.status(200).json({ dashboard, sections });
   } catch (err) {
     res.status(500).json(err);
