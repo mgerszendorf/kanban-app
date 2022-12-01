@@ -8,7 +8,7 @@ import { routes } from "./routes";
 
 //Config
 const port = process.env.PORT || 8080;
-const app = express();
+export const app = express();
 dotenv.config();
 app.use(cors());
 app.use(express.json());
