@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setAuth } from "../redux/features/authSlice";
-import { setMessage } from "../redux/features/messageSlice";
+import { setToastNotification } from "../redux/features/toastNotificationSlice";
 import { Store } from "../redux/types";
 import firebase from "../services/firebase";
 
@@ -31,7 +31,7 @@ function UserOptions() {
             })
           );
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Logged out successfully",
               type: "Success",
             })
@@ -41,7 +41,7 @@ function UserOptions() {
         })
         .catch((err) => {
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Signout failed. Please try again",
               type: "Error",
             })
@@ -49,7 +49,7 @@ function UserOptions() {
         });
     } catch (err) {
       dispatch(
-        setMessage({
+        setToastNotification({
           message: "Signout failed. Please try again",
           type: "Error",
         })

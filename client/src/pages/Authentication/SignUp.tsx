@@ -6,8 +6,8 @@ import firebase from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { setAuth } from "../../redux/features/authSlice";
-import { setMessage } from "../../redux/features/messageSlice";
-import Message from "../../components/Message";
+import { setToastNotification } from "../../redux/features/toastNotificationSlice";
+import Message from "../../components/ToastNotification";
 
 const SignUp = () => {
   const [loader, setLoader] = useState(false);
@@ -39,7 +39,7 @@ const SignUp = () => {
               })
             );
             dispatch(
-              setMessage({
+              setToastNotification({
                 message: "Your account was successfully created!",
                 type: "Success",
               })
@@ -52,7 +52,7 @@ const SignUp = () => {
         })
         .catch(function (err) {
           dispatch(
-            setMessage({
+            setToastNotification({
               message:
                 "Something went wrong, we couldn't create your account. Please try again.",
               type: "Error",
@@ -68,7 +68,7 @@ const SignUp = () => {
         });
     } catch (err) {
       dispatch(
-        setMessage({
+        setToastNotification({
           message:
             "Something went wrong, we couldn't create your account. Please try again.",
           type: "Error",
@@ -96,7 +96,7 @@ const SignUp = () => {
             })
           );
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Logged in successfully",
               type: "Success",
             })
@@ -111,7 +111,7 @@ const SignUp = () => {
         });
     } catch (err) {
       dispatch(
-        setMessage({
+        setToastNotification({
           message: "Invalid login credentials",
           type: "Error",
         })

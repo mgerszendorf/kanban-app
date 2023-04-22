@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dashboardState from "./features/dashboardSlice";
-import messageState from "./features/messageSlice";
+import toastNotificationState from "./features/toastNotificationSlice";
 import navigationElementState from "./features/navigationElementSlice";
 import authState from "./features/authSlice";
 import favouriteListState from "./features/favouriteSlice";
@@ -8,7 +8,7 @@ import favouriteListState from "./features/favouriteSlice";
 const store = configureStore({
   reducer: {
     dashboardState,
-    messageState,
+    toastNotificationState,
     navigationElementState,
     authState,
     favouriteListState,

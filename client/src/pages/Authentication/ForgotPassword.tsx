@@ -4,9 +4,9 @@ import { BiLeftArrowAlt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import firebase from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
-import { setMessage } from "../../redux/features/messageSlice";
+import { setToastNotification } from "../../redux/features/toastNotificationSlice";
 import Loader from "../../components/Loader";
-import Message from "../../components/Message";
+import Message from "../../components/ToastNotification";
 
 function ForgotPassword() {
   const [loader, setLoader] = useState(false);
@@ -24,7 +24,7 @@ function ForgotPassword() {
         .sendPasswordResetEmail(email)
         .then(() => {
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Reset email sent. Go check your inbox.",
               type: "Success",
             })
@@ -36,7 +36,7 @@ function ForgotPassword() {
         })
         .catch((err) => {
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Password reset failed. Please try again",
               type: "Error",
             })
@@ -51,7 +51,7 @@ function ForgotPassword() {
         });
     } catch (err) {
       dispatch(
-        setMessage({
+        setToastNotification({
           message: "Password reset failed. Please try again.",
           type: "Error",
         })

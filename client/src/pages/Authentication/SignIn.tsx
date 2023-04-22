@@ -5,9 +5,9 @@ import firebase from "../../services/firebase";
 import { GoogleAuthProvider } from "firebase/auth";
 import Loader from "../../components/Loader";
 import { GrClose } from "react-icons/gr";
-import { setMessage } from "../../redux/features/messageSlice";
+import { setToastNotification } from "../../redux/features/toastNotificationSlice";
 import { setAuth } from "../../redux/features/authSlice";
-import Message from "../../components/Message";
+import Message from "../../components/ToastNotification";
 
 const SignIn = () => {
   const [loader, setLoader] = useState(false);
@@ -38,7 +38,7 @@ const SignIn = () => {
             })
           );
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Logged in successfully",
               type: "Success",
             })
@@ -50,7 +50,7 @@ const SignIn = () => {
         })
         .catch(() => {
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Invalid login credentials",
               type: "Error",
             })
@@ -65,7 +65,7 @@ const SignIn = () => {
         });
     } catch (err) {
       dispatch(
-        setMessage({
+        setToastNotification({
           message: "Invalid login credentials",
           type: "Error",
         })
@@ -92,7 +92,7 @@ const SignIn = () => {
             })
           );
           dispatch(
-            setMessage({
+            setToastNotification({
               message: "Logged in successfully",
               type: "Success",
             })
@@ -107,7 +107,7 @@ const SignIn = () => {
         });
     } catch (err) {
       dispatch(
-        setMessage({
+        setToastNotification({
           message: "Invalid login credentials",
           type: "Error",
         })

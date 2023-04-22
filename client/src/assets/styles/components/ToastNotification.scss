@@ -1,7 +1,7 @@
 @import "../utils/variables";
 
-.message {
-  position: absolute;
+.toast-notification {
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -28,7 +28,7 @@
 }
 
 @media all and (min-width: 1024px) {
-  .message {
+  .toast-notification {
     p {
       font-size: 1.6rem;
     }

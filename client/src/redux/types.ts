@@ -1,6 +1,6 @@
 export interface Store {
   dashboardState: IDashboards;
-  messageState: IMessage;
+  toastNotificationState: IToastNotification;
   navigationElementState: INavigationElement;
   authState: IAuthState;
   favouriteListState: IDashboards;
@@ -29,7 +29,7 @@ export interface IDashboardUser {
 }
 
 // Message
-export interface IMessage {
+export interface IToastNotification {
   value: {
     message: String;
     type: String;
@@ -55,6 +55,3 @@ export interface IUser {
   uid: string;
   refreshToken: string;
 }
-
-//Favourite
-export interface IFavouriteList {}
