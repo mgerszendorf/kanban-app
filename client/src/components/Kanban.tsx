@@ -149,10 +149,9 @@ const Kanban = (props: IKanbanProps) => {
     setData(newData);
   };
 
-  if (loader) return <Loader />;
-
   return (
     <div className="kanban">
+      {loader && <Loader />}
       <div className="sections-info">
         <button className="new-section-btn" onClick={createSection}>
           New Section
