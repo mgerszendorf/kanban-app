@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import dashboardApi from "../api/dashboardApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaTrashAlt, FaStar } from "react-icons/fa";
+import { FaTrashAlt, FaStar, FaRegStar } from "react-icons/fa";
 import Kanban from "../components/Kanban";
 import Emoji from "../components/Emoji";
 import { useSelector } from "react-redux";
@@ -188,7 +188,8 @@ function Dashboard() {
       <div className="dashboard-info">
         <div className="options-bar">
           <div className="left">
-            <FaStar className="star" onClick={addFavourite} />
+            {isFavourite ? <FaStar className="star" onClick={addFavourite} /> : <FaRegStar className="star" onClick={addFavourite} />}
+
             <FaTrashAlt className="trash" onClick={deleteDashboard} />
           </div>
         </div>
