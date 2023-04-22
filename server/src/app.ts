@@ -3,7 +3,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import cors from "cors";
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose, { ConnectOptions, MongooseError } from "mongoose";
 import { routes } from "./routes";
 
 //Config
@@ -28,7 +28,7 @@ mongoose
   .then(() => {
     console.log("mongoDB connected");
   })
-  .catch((err: any) => {
+  .catch((err: MongooseError) => {
     console.error("Error:", err);
   });
 

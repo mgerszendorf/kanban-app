@@ -16,7 +16,7 @@ const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
-axiosClient.interceptors.request.use(async (config) => {
+axiosClient.interceptors.request.use(async (config: any) => {
   return {
     ...config,
     headers: {
