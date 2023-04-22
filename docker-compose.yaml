@@ -1,35 +1,5 @@
 version: "3.8"
 services:
-  
-  client:
-   build:
-      context: ./client
-      dockerfile: Dockerfile.dev
-   ports:
-    -  3000:3000
-   container_name: kanban-frontend
-   networks:
-    -  mern-stack-net
-   volumes:
-    -  ./client/src/app
-    -  ./client/public/app
-   depends_on:
-    - server
-
-  server:
-   build:
-      context: ./server
-      dockerfile: Dockerfile.dev
-   ports:
-     - 8080:8080
-   container_name: kanban-server
-   networks:
-     - mern-stack-net
-   volumes:
-    - ./server/src/app
-   depends_on:
-    - db
-
   db:
     image: mongo
     ports:
@@ -39,6 +9,40 @@ services:
       - mern-stack-net
     volumes:
       - mongo-data:/data/db
+      
+  server:
+    container_name: kanban-server
+    image: kanban-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    networks:
+      - mern-stack-net
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - db
+
+  client:
+    container_name: kanban-frontend
+    image: kanban-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    networks:
+      - mern-stack-net
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
 
 networks:
   mern-stack-net:
