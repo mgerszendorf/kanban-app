@@ -56,7 +56,7 @@ function Dashboard() {
       }
     };
     getDashboard();
-  }, [dashboardId]);
+  }, [dashboardId, isFavourite]);
 
   //Checking how many lines a description has
   useEffect(() => {
@@ -166,6 +166,7 @@ function Dashboard() {
       const dashboard = await dashboardApi.update(dashboardId, {
         favourite: !isFavourite,
       });
+      console.log(dashboard)
       let newFavouriteList = [...favouriteListState];
       if (isFavourite) {
         newFavouriteList = newFavouriteList.filter((e) => e.id !== dashboardId);
